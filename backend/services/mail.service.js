@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 async function sendEmail(to, subject, html) {
   const mailOptions = {
-    from: `"Trip Sync" <${process.env.EMAIL_USER}>`,
+    from: `"Trip Sync" <noreply@tripsync.com>`, // sender address
     to,
     subject,
     html
