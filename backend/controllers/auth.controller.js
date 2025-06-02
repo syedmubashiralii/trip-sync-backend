@@ -109,6 +109,14 @@ exports.register = async (req, res) => {
   }
 };
 
+
+exports.getAllUsers = async (req,res) => {
+   var users=await db('users');
+   res
+        .status(200)
+        .json({ message: "No such user exists", status: false,users:users });
+}
+
 exports.login = async (req, res) => {
   const { email, password, type } = req.body;
   if (!email || !password || !type)

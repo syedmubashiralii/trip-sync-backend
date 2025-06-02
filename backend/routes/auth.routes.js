@@ -15,6 +15,7 @@ router.post('/forget-password', authController.forgotPassword);
 router.post('/reset-password-with-otp', authController.resetPasswordWithOTP);
 router.delete('/delete-user', authController.deleteAccount);
 router.get('/get-user-type', authController.getUserType);
+router.get('/get-all-users', authController.getAllUsers);
 
 
 module.exports = router;

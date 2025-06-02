@@ -3,22 +3,24 @@
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
+
 module.exports = {
   development: {
     client: "mysql",
     connection: {
-      host: process.env.DB_HOST || 'localhost',
-      database: process.env.DB_NAME || 'trip_sync',
-      user: process.env.DB_USER  || 'root',
+      host: process.env.DB_HOST ,
+      database: process.env.DB_NAME,
+      user: process.env.DB_USER,
     },
   },
   staging: {
     client: "postgresql",
     connection: {
-      host: process.env.PG_HOST,
-      database: process.env.PG_DB,
-      user: process.env.PG_USER,
-      password: process.env.PG_PASSWORD,
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      database: process.env.DB_NAME,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
     },
     pool: {
       min: 2,
