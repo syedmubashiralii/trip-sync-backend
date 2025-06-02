@@ -1,6 +1,8 @@
 const express = require("express");
 require("dotenv").config();
 const authRoutes = require("./backend/routes/auth.routes");
+const profileRoutes = require('./backend/routes/profile.routes');
+const authenticateToken = require('./backend/middlewares/auth.middleware')
 
 const app = express();
 app.use(express.json());
@@ -23,11 +25,12 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/profile', authenticateToken ,profileRoutes);
 
 
 
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0',() => {
   console.log(`=====================================`);
   console.log(`Launching Trip Sync backend Application`);
   console.log(

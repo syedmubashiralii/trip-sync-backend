@@ -4,14 +4,14 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   service: 'gmail', 
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
+    user: process.env.EMAIL_USER || 'smubashirali620@gmail.com',
+    pass: process.env.EMAIL_PASS || 'sbjb xzmf cudb mphb'
   }
 });
 
 async function sendEmail(to, subject, html) {
   const mailOptions = {
-    from: `"Trip Sync" <noreply@tripsync.com>`, // sender address
+    from: `"Trip Sync" <noreply@tripsync.com>`,
     to,
     subject,
     html
