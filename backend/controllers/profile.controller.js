@@ -2,7 +2,7 @@ const { getTableByType } = require("../utils/helper_functions");
 const db = require("../utils/knex");
 const { comparePassword, hashPassword } = require("../utils/hash");
 
-exports.getProfile = async (req, res) => {
+exports.getProfile = async (req, res, next) => {
   const { role, email } = req.user;
 
   try {
@@ -24,12 +24,11 @@ exports.getProfile = async (req, res) => {
       profile,
     });
   } catch (err) {
-    console.error("Error fetching profile:", err);
-    res.status(500).json({ message: "Server error" });
+    next(err);
   }
 };
 
-exports.updateProfile = async (req, res) => {
+exports.updateProfile = async (req, res,next) => {
   const { email, role } = req.user;
   const { name, phone, bio, reg_no, description } = req.body || {};
   const profile_image = req.file ? `uploads/${req.file.filename}` : null;
@@ -64,19 +63,18 @@ exports.updateProfile = async (req, res) => {
     });
   } catch (err) {
     console.error("Update profile error:", err);
-    res.status(500).json({ message: "Server error" });
+    next(err);
   }
 };
 
-
-
-
-exports.updatePassword = async (req, res) => {
+exports.updatePassword = async (req, res,next) => {
   const { email, role } = req.user;
   const { currentPassword, newPassword } = req.body || {};
 
   if (!currentPassword || !newPassword) {
-    return res.status(400).json({ message: "Both current and new passwords are required" });
+    return res
+      .status(400)
+      .json({ message: "Both current and new passwords are required" });
   }
 
   try {
@@ -96,6 +94,6 @@ exports.updatePassword = async (req, res) => {
     res.status(200).json({ message: "Password updated successfully" });
   } catch (err) {
     console.error("Error updating password:", err);
-    res.status(500).json({ message: "Server error" });
+    next(err);
   }
 };

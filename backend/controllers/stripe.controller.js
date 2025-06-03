@@ -1,8 +1,6 @@
-require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
-// console.log(process.env.PORT);
-// const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-exports.checkout = async (req, res) => {
+exports.checkout = async (req, res, err) => {
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {

@@ -1,5 +1,5 @@
-//Node Working Pattern
-// Request → Event Queue → Event Loop → (Blocking Operation/ Non Blocking Request)
+//   Node Working Pattern
+//   Request → Event Queue → Event Loop → (Blocking Operation/ Non Blocking Request)
   
 //   Non Blocking Request (async) : Execute & Response
 //   Blocking Response (sync): Thread Pool(4 workers by default) → Threads(Workers) → Execute & Respond.

@@ -6,7 +6,7 @@ const { getTableByType } = require("../utils/helper_functions.js");
 const bcrypt = require("bcrypt");
 
 // table: 'users', 'companies', or 'tour_guides'
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
   const { name, email, password, type, phone, bio, reg_no, description } =
     req.body;
   const profile_image = req.file ? `uploads/${req.file.filename}` : null;
@@ -105,19 +105,25 @@ exports.register = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error " + err });
+    // res.status(500).json({ message: "Server error " + err });
+    next(err);
   }
 };
 
 
-exports.getAllUsers = async (req,res) => {
+exports.getAllUsers = async (req, res, next) => {
+  try{
    var users=await db('users');
    res
         .status(200)
         .json({ message: "No such user exists", status: false,users:users });
+  }
+  catch(e){
+    next(err);
+  }
 }
 
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
   const { email, password, type } = req.body;
   if (!email || !password || !type)
     return res.status(400).json({ message: "All fields are required" });
@@ -152,11 +158,11 @@ exports.login = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    next(err);
   }
 };
 
-exports.verifyOtp = async (req, res) => {
+exports.verifyOtp = async (req, res, next) => {
   const { email, otp, type } = req.body;
 
   const table = getTableByType(type);
@@ -186,11 +192,11 @@ exports.verifyOtp = async (req, res) => {
     res.status(200).json({ message: "Email verified successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error " + err });
+    next(err);
   }
 };
 
-exports.resendOtp = async (req, res) => {
+exports.resendOtp = async (req, res, next) => {
   const { email, type } = req.body;
 
   const table = getTableByType(type);
@@ -220,11 +226,11 @@ exports.resendOtp = async (req, res) => {
     res.status(200).json({ message: "OTP resent successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error " + err });
+    next(err);
   }
 };
 
-exports.forgotPassword = async (req, res) => {
+exports.forgotPassword = async (req, res, next) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ message: "Email is required" });
 
@@ -260,11 +266,11 @@ exports.forgotPassword = async (req, res) => {
     res.json({ message: "OTP sent to email!" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    next(err);
   }
 };
 
-exports.resetPasswordWithOTP = async (req, res) => {
+exports.resetPasswordWithOTP = async (req, res, next) => {
   const { email, otp, newPassword } = req.body;
   if (!email || !otp || !newPassword) {
     return res
@@ -307,11 +313,11 @@ exports.resetPasswordWithOTP = async (req, res) => {
     res.json({ message: "Password has been reset successfully!" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error" });
+    next(err);
   }
 };
 
-exports.deleteAccount = async (req, res) => {
+exports.deleteAccount = async (req, res, next) => {
   const { email, type } = req.body;
 
   const table = getTableByType(type);
@@ -342,12 +348,12 @@ exports.deleteAccount = async (req, res) => {
     res.status(200).json({ message: "Account deleted successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Server error " + err });
+    next(err);
   }
 };
 
 // API to fetch user type based on email
-exports.getUserType = async (req, res) => {
+exports.getUserType = async (req, res, next) => {
   const { email } = req.body;
 
   try {
@@ -379,6 +385,6 @@ exports.getUserType = async (req, res) => {
     });
   } catch (err) {
     console.error("Error fetching user type:", err);
-    res.status(500).json({ message: "Server error", error: err.message });
+    next(err);
   }
 };
