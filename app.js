@@ -12,6 +12,7 @@ app.set('view engine', 'ejs')
 app.use("/uploads", express.static("uploads"));
 
 const PORT = process.env.PORT || 3000;
+console.log(process.env.PORT);
 const ENV = process.env.NODE_ENV;
 
 
@@ -31,7 +32,7 @@ app.get("/", async (req, res) => {
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/profile', authenticateToken ,profileRoutes);
-app.use('/' ,stripeRoutes);
+app.use('/' , stripeRoutes);
 
 app.listen(PORT, '0.0.0.0',() => {
   console.log(`=====================================`);
