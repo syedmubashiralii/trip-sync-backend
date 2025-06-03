@@ -17,5 +17,6 @@ Thumbs.db
 
 # Optional: VSCode settings (if you're using VSCode)
 .vscode/
+//remove env files
 .env.staging
 .env.development
