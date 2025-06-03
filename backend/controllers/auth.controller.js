@@ -118,7 +118,7 @@ exports.getAllUsers = async (req, res, next) => {
         .status(200)
         .json({ message: "No such user exists", status: false,users:users });
   }
-  catch(e){
+  catch(err){
     next(err);
   }
 }
