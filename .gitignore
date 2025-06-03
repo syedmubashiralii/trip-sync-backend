@@ -17,3 +17,5 @@ Thumbs.db
 
 # Optional: VSCode settings (if you're using VSCode)
 .vscode/
+.env.staging
+.env.development
