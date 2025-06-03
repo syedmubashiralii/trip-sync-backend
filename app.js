@@ -26,7 +26,6 @@ app.get("/", async (req, res) => {
       message: "Hello there, this is a Node js Trip Sync API.",
       author: "Syed Mubashir Ali",
       server_alive: true,
-      users: users
     });
 });
 
