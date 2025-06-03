@@ -1,4 +1,4 @@
-const db = require("../utils/knex.js");
+const db = require("../../knex.js");
 const { hashPassword, comparePassword } = require("../utils/hash");
 const sendEmail = require("../services/mail.service");
 const { generateToken } = require("../utils/jwt");

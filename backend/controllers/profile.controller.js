@@ -1,5 +1,5 @@
 const { getTableByType } = require("../utils/helper_functions");
-const db = require("../utils/knex");
+const db = require("../../knex");
 const { comparePassword, hashPassword } = require("../utils/hash");
 
 exports.getProfile = async (req, res, next) => {
