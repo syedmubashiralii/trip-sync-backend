@@ -21,6 +21,7 @@ app.use(cors({
   },
 }));
 app.use(express.json());
+app.set('trust proxy', 1); // trust first proxy for limiter used in login endpoint
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev')); 
 app.set('view engine', 'ejs')
