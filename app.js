@@ -9,12 +9,12 @@ const stripeRoutes = require('./backend/routes/stripe.routes');
 const authenticateToken = require('./backend/middlewares/auth.middleware')
 
 const app = express();
-const allowedOrigins = [ 'https://yourfrontend.com'];
+const allowedOrigins = [ 'https://trip-sync-backend.onre','https://localhost:3000'];
 
 app.use(cors({
   origin: function (origin, callback) {
     console.log(origin);
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
     callback(new Error('Not allowed by CORS'));
