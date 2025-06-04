@@ -1,5 +1,7 @@
 const express = require("express");
 const morgan = require('morgan');
+const cors = require('cors');
+
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 const authRoutes = require("./backend/routes/auth.routes");
 const profileRoutes = require('./backend/routes/profile.routes');
@@ -7,6 +9,17 @@ const stripeRoutes = require('./backend/routes/stripe.routes');
 const authenticateToken = require('./backend/middlewares/auth.middleware')
 
 const app = express();
+const allowedOrigins = [ 'https://yourfrontend.com'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    console.log(origin);
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    callback(new Error('Not allowed by CORS'));
+  },
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev')); 
@@ -30,7 +43,6 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/error-test", (req, res, next) => {
-  // Create and throw a custom error
   const err = new Error("Something went wrong!");
   err.status = 400;
   next(err); 
@@ -40,6 +52,7 @@ app.get("/error-test", (req, res, next) => {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/profile', authenticateToken ,profileRoutes);
 app.use('/' , stripeRoutes);
+
 
 // ✅ Error-handling middleware
 app.use((err, req, res, next) => {
