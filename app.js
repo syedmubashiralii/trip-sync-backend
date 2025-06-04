@@ -13,7 +13,6 @@ const allowedOrigins = [ 'https://trip-sync-backend.onrender.com','https://local
 
 app.use(cors({
   origin: function (origin, callback) {
-    console.log(origin);
     if (!origin || allowedOrigins.includes(origin)) {
       return callback(null, true);
     }

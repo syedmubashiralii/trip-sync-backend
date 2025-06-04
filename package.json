@@ -9,7 +9,8 @@
     "staging": "cross-env NODE_ENV=staging nodemon app.js",
     "production": "cross-env NODE_ENV=production nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "knex migrate:latest --env production"
+    "migrate-prod": "knex migrate:latest --env production",
+    "migrate-dev": "knex migrate:latest --env development"
   },
   "repository": {
     "type": "git",

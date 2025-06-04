@@ -37,6 +37,8 @@ exports.register = async (req, res, next) => {
         return res
           .status(400)
           .json({ message: "Name and phone are required for user" });
+
+          
       table = "users";
       fields = ["name", "email", "password", "phone"];
       values = [name, email, password, phone];

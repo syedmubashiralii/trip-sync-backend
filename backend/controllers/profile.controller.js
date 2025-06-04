@@ -2,6 +2,7 @@ const { getTableByType } = require("../utils/helper_functions");
 const db = require("../../knex");
 const { comparePassword, hashPassword } = require("../utils/hash");
 
+
 exports.getProfile = async (req, res, next) => {
   const { role, email } = req.user;
 
@@ -18,6 +19,7 @@ exports.getProfile = async (req, res, next) => {
     delete profile.password;
     delete profile.reset_otp;
     delete profile.otp_expiry;
+
     res.status(200).json({
       message: "Profile fetched successfully",
       userType,
@@ -34,6 +36,7 @@ exports.updateProfile = async (req, res,next) => {
   const profile_image = req.file ? `uploads/${req.file.filename}` : null;
 
   try {
+    // startTransition();
     const table = getTableByType(role);
 
     const existingUser = await db(table).where({ email }).first();
@@ -52,6 +55,7 @@ exports.updateProfile = async (req, res,next) => {
       if (reg_no) updates.reg_no = reg_no;
       if (description) updates.description = description;
     }
+
     if (Object.keys(updates).length === 0) {
       return res.status(400).json({ message: "No fields provided to update" });
     }
