@@ -52,7 +52,7 @@ app.get("/error-test", (req, res, next) => {
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/profile', authenticateToken ,profileRoutes);
-app.use('/' , stripeRoutes);
+app.use('/order' , stripeRoutes);
 
 
 // ✅ Error-handling middleware
